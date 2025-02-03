@@ -1,0 +1,43 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ms-auth
+          # lb -> load balancer
+          uri: lb://ms-auth
+          predicates:
+            - Path=/ms-auth/**
+        - id: ms-post
+          uri: lb://ms-post
+          predicates:
+            - Path=/ms-post/**
+        - id: ms-rating
+          uri: lb://ms-rating
+          predicates:
+            - Path=/ms-rating/**
+        - id: ms-comment
+          uri: lb://ms-comment
+          predicates:
+            - Path=/ms-comment/**
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: localhost:8761/eureka
+
+logging:
+  level:
+    org.springframework: info
+
+# CUSTOM PROPERTIES
+token:
+  signing:
+    key: ${SECRET_KEY}
