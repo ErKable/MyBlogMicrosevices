@@ -1,0 +1,1 @@
+CREATE OR REPLACE VIEW  calc_avg AS SELECT r.post_id, ROUND(AVG(r.rate),2) AS average FROM rating r GROUP BY r.post_id;
